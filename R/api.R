@@ -393,7 +393,7 @@ cromwellLogs <- function(ids, ...) {
 #' @param workflowOptions A \code{list}, a JSON string (as a
 #'     \code{character} vector of length 1, or an
 #'     \code{\link[httr]{upload_file}} object. See details below.
-#' @param customLabels A named \code{character} vector with key-value
+#' @param labels A named \code{character} vector with key-value
 #'     pairs to assign to all batch tasks.
 #' @param timeout The number of seconds to wait for a response. Batch
 #'     jobs can take quite some time for cromwell to process, so this
@@ -412,7 +412,7 @@ cromwellLogs <- function(ids, ...) {
 #' @export
 cromwellBatch <- function(wdlSource,
                          workflowInputs,
-                         customLabels = NULL,
+                         labels = NULL,
                          workflowOptions=NULL,
                          timeout = 120,
                          ...) {
@@ -433,7 +433,7 @@ cromwellBatch <- function(wdlSource,
     }
     body = list(wdlSource       = wdlSource,
                 workflowInputs  = inputs,
-                customLabels = toJSON(customLabels,auto_unbox=TRUE),
+                labels = toJSON(labels,auto_unbox=TRUE),
                 workflowOptions = opts)
 
     return(cromwell_POST('/api/workflows/v1/batch',body = body, encode = 'multipart',
@@ -465,7 +465,7 @@ cromwellBatch <- function(wdlSource,
 #' @export
 cromwellSingle <- function(wdlSource,
                           workflowInputs,
-                          customLabels = NULL,
+                          labels = NULL,
                           workflowOptions=NULL,
                           timeout = 120,
                           ...) {
